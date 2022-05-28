@@ -9,6 +9,11 @@ body {
   --secondary-color: #ffff;
 }
 
+.nav-link>a {
+  color: #fffefedf;
+  text-decoration: none;
+}
+
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:focus,
