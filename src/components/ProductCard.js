@@ -1,25 +1,29 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Truncate from "./Truncate";
 
-export default function ProductCard({ img, id }) {
+export default function ProductCard({ item }) {
   const navigate = useNavigate();
   return (
     <Card
       style={{ width: "16rem", margin: "auto", cursor: "pointer" }}
-      onClick={() => navigate(`/product/${id}`)}
+      onClick={() => navigate(`/product/${item.id}`)}
     >
-      <Card.Img variant="top" src={img} />
+      <Card.Img variant="top" src={item.image} />
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
+        <Card.Title>{item.name}</Card.Title>
         <Card.Text>
-          <Truncate>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Truncate>
+          <Truncate>{item.desc}</Truncate>
         </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        <Row md="auto" className="justify-content-between">
+          <Col>
+            <strong>Qty: {item.qty}</strong>
+          </Col>
+          <Col>
+            <strong>price: {item.price}</strong>
+          </Col>
+        </Row>
       </Card.Body>
     </Card>
   );
