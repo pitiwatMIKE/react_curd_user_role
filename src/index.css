@@ -1,12 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 html,
 body {
   margin: 0;
   padding: 0;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 300;
 }
 
 :root {
   --primary-color: #262f37;
   --secondary-color: #ffff;
+}
+
+.navbar-brand>a {
+  color: white;
+  text-decoration: none;
 }
 
 .nav-link>a {

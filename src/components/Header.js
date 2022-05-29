@@ -5,25 +5,11 @@ import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <>
-      {/* <Navbar bg="dark" variant="dark">
-        <Container>
-          <Link className="navbar-brand" to="/">
-            CRUD-React
-          </Link>
-          <Nav className="me-auto" variant="pills">
-            <Nav.Link>
-              <Link to="/">Home</Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link to="about">About</Link>
-            </Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar> */}
-
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container fluid>
-          <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+          <Navbar.Brand>
+            <Link to="/">CRUD-ReacApp</Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -31,12 +17,13 @@ export default function Header() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link>
-                <Link to="/">Home</Link>
-              </Nav.Link>
-              <Nav.Link>
-                <Link to="about">About</Link>
-              </Nav.Link>
+              <Link className="nav-link" to="/">
+                Home
+              </Link>
+
+              <Link className="nav-link" to="about">
+                About
+              </Link>
             </Nav>
             <div>
               <Button variant="secondary">Login</Button>
