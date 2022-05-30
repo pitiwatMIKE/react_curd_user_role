@@ -3,7 +3,7 @@ import { Card, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Truncate from "./Truncate";
 
-export default function ProductCard({ item }) {
+const ProductCard = React.memo(({ item }) => {
   const navigate = useNavigate();
   return (
     <Card
@@ -27,4 +27,6 @@ export default function ProductCard({ item }) {
       </Card.Body>
     </Card>
   );
-}
+});
+
+export default ProductCard;

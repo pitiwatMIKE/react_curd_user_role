@@ -9,9 +9,15 @@ const initialState = {
 
 export const getAllProducts = createAsyncThunk(
   "allProduct/fetchAllproducts",
-  async () => {
+  async ({ page, search }) => {
     try {
-      const response = await axios.get("/api/products");
+      const currentPage = page ? `page=${page}` : "";
+      const keyword = search ? `search=${search}` : "";
+
+      const response = await axios.get(
+        `/api/products?${currentPage}&${keyword}`
+      );
+
       return response.data;
     } catch (e) {
       throw new Error(e.message);
@@ -34,7 +40,6 @@ export const allProductsSlice = createSlice({
         state.value = action.payload;
       })
       .addCase(getAllProducts.rejected, (state, action) => {
-        console.log(action);
         state.loading = false;
         state.error = true;
         state.value = action.error.message;
