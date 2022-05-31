@@ -25,7 +25,7 @@ const Search = ({ serchUrl }) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Button type="submit" variant="outline-secondary">
+        <Button type="submit" variant="primary">
           Button
         </Button>
       </InputGroup>

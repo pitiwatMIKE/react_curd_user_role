@@ -44,3 +44,13 @@ body {
   background-color: var(--secondary-color);
   box-shadow: none;
 }
+
+.pagination .active .page-link {
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: #ffff;
+}
+
+.pagination .page-link {
+  color: var(--primary-color)
+}
