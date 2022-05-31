@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import ProductCard from "../components/ProductCard";
 import {
-  getAllProducts,
-  allProductsSelector,
-} from "../reducers/products/allProductsSlice";
+  getProducts,
+  productsSelector,
+} from "../reducers/products/ProductsSlice";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import Search from "../components/Search";
@@ -14,16 +14,16 @@ import Paginate from "../components/Paginate";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const { loading, error, value } = useSelector(allProductsSelector);
+  const { loading, error, value } = useSelector(productsSelector);
   const { page, search } = useParams();
 
   useEffect(() => {
-    dispatch(getAllProducts({ page, search }));
+    dispatch(getProducts({ page, search }));
   }, [dispatch, page, search]);
 
   return (
     <>
-      <h1>All Products</h1>
+      <h1 className="mb-4">Products</h1>
       {loading ? (
         <Loading />
       ) : error ? (
@@ -49,7 +49,12 @@ export default function HomePage() {
           </Row>
 
           {/* Pagination */}
-          <Paginate count={2} page={page} search={search} maxPage={value.maxPage} />
+          <Paginate
+            count={2}
+            page={page}
+            search={search}
+            maxPage={value.maxPage}
+          />
         </div>
       ) : null}
     </>

@@ -7,8 +7,8 @@ const initialState = {
   value: [],
 };
 
-export const getAllProducts = createAsyncThunk(
-  "allProduct/fetchAllproducts",
+export const getProducts = createAsyncThunk(
+  "products/fetchProducts",
   async ({ page, search }) => {
     try {
       const currentPage = page ? `page=${page}` : "";
@@ -25,21 +25,21 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
-export const allProductsSlice = createSlice({
-  name: "allProducts",
+export const productsSlice = createSlice({
+  name: "products",
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(getAllProducts.pending, (state) => {
+      .addCase(getProducts.pending, (state) => {
         state.loading = true;
         state.error = false;
       })
-      .addCase(getAllProducts.fulfilled, (state, action) => {
+      .addCase(getProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
         state.value = action.payload;
       })
-      .addCase(getAllProducts.rejected, (state, action) => {
+      .addCase(getProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.value = action.error.message;
@@ -47,5 +47,5 @@ export const allProductsSlice = createSlice({
   },
 });
 
-export const allProductsSelector = (state) => state.allProducts;
-export default allProductsSlice.reducer;
+export const productsSelector = (state) => state.products;
+export default productsSlice.reducer;
