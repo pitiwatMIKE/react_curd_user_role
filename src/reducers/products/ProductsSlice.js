@@ -31,18 +31,23 @@ export const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getProducts.pending, (state) => {
-        state.loading = true;
-        state.error = false;
+        // state.loading = true;
+        // state.error = false;
+        return { ...initialState, loading: true };
       })
-      .addCase(getProducts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = false;
-        state.value = action.payload;
+      .addCase(getProducts.fulfilled, (state, action, getState) => {
+        // state.loading = false;
+        // state.error = false;
+        // state.value = action.payload;
+
+        return { ...initialState, value: action.payload };
       })
       .addCase(getProducts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = true;
-        state.value = action.error.message;
+        // state.loading = false;
+        // state.error = true;
+        // state.value = action.error.message;
+
+        return { ...initialState, error: true, value: action.error.message };
       });
   },
 });

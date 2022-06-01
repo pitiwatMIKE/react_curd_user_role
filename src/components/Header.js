@@ -1,8 +1,44 @@
 import React from "react";
-import { Navbar, Container, Nav, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Navbar, Container, Nav, Button, Row, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { userInfoSelector } from "../reducers/users/userInfoSlice";
 
 export default function Header() {
+  const navigate = useNavigate();
+  const { value: userInfo } = useSelector(userInfoSelector);
+
+  const Logout = () => (
+    <Row className="align-items-center">
+      <Col>
+        <div style={{ color: "#ffff" }}>{userInfo.user}</div>
+      </Col>
+      <Col>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            localStorage.removeItem("userInfo");
+            window.location.href = "/";
+            // navigate("/")
+          }}
+        >
+          Logout
+        </Button>
+      </Col>
+    </Row>
+  );
+
+  const Login = () => (
+    <div>
+      <Button onClick={() => navigate("/login")} variant="secondary">
+        Login
+      </Button>
+      <Button onClick={() => navigate("/register")} variant="secondary">
+        Register
+      </Button>
+    </div>
+  );
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -21,13 +57,15 @@ export default function Header() {
                 Home
               </Link>
 
-              <Link className="nav-link" to="about">
+              <Link className="nav-link" to="/about">
                 About
               </Link>
+
+              <Link className="nav-link" to="/dashboard">
+                DashBoard
+              </Link>
             </Nav>
-            <div>
-              <Button variant="secondary">Login</Button>
-            </div>
+            <div>{userInfo ? <Logout /> : <Login />}</div>
           </Navbar.Collapse>
         </Container>
       </Navbar>
