@@ -32,11 +32,15 @@ const userInfoSlice = createSlice({
       state.errorMessage = "";
       state.value = action.payload;
     },
+    logout: (state) => {
+      localStorage.removeItem("userInfo");
+      return { ...initialState };
+    },
   },
 });
 
 const { loading, error, success } = userInfoSlice.actions;
-export const { setUseInfo } = userInfoSlice.actions;
+export const { setUseInfo, logout } = userInfoSlice.actions;
 
 export const register = (data) => async (dispatch) => {
   dispatch(loading());

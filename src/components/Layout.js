@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { setUseInfo } from "../reducers/users/userInfoSlice";
+import { logout, setUseInfo } from "../reducers/users/userInfoSlice";
 import Header from "./Header";
 
 export default function Layout({ children }) {
@@ -13,7 +13,7 @@ export default function Layout({ children }) {
     if (userInfo?.token) {
       dispatch(setUseInfo(userInfo));
     } else {
-      dispatch(setUseInfo(""));
+      dispatch(logout());
     }
   }, [dispatch]);
 

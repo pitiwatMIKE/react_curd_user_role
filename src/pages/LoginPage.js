@@ -56,7 +56,6 @@ export default function LoginPage() {
       <Form noValidate validated={validated} onSubmit={handlerSubmit}>
         <Form.Group className="mb-3" controlId="formEmail">
           <Form.Label>Email</Form.Label>
-          debug {email}
           <Form.Control
             type="email"
             placeholder="Enter email"

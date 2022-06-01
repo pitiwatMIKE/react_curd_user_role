@@ -1,25 +1,25 @@
 import React from "react";
 import { Navbar, Container, Nav, Button, Row, Col } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { userInfoSelector } from "../reducers/users/userInfoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { logout, userInfoSelector } from "../reducers/users/userInfoSlice";
 
 export default function Header() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { value: userInfo } = useSelector(userInfoSelector);
 
   const Logout = () => (
     <Row className="align-items-center">
-      <Col>
-        <div style={{ color: "#ffff" }}>{userInfo.user}</div>
+      <Col md={12} lg="auto">
+        <div style={{ color: "#ffff" }}>Name: {userInfo.user}</div>
       </Col>
       <Col>
         <Button
           variant="secondary"
           onClick={() => {
-            localStorage.removeItem("userInfo");
-            window.location.href = "/";
-            // navigate("/")
+            dispatch(logout());
+            navigate("/")
           }}
         >
           Logout
@@ -53,17 +53,17 @@ export default function Header() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Link className="nav-link" to="/">
+              <NavLink className="nav-link" to="/">
                 Home
-              </Link>
+              </NavLink>
 
-              <Link className="nav-link" to="/about">
+              <NavLink className="nav-link" to="/about">
                 About
-              </Link>
+              </NavLink>
 
-              <Link className="nav-link" to="/dashboard">
+              <NavLink className="nav-link" to="/dashboard">
                 DashBoard
-              </Link>
+              </NavLink>
             </Nav>
             <div>{userInfo ? <Logout /> : <Login />}</div>
           </Navbar.Collapse>

@@ -23,7 +23,7 @@ export default function HomePage() {
 
   return (
     <>
-      <h1 className="mb-4">Products</h1>
+      <h2 className="mb-4">Products</h2>
       {loading ? (
         <Loading />
       ) : error ? (

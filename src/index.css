@@ -54,3 +54,15 @@ body {
 .pagination .page-link {
   color: var(--primary-color)
 }
+
+
+.nav-pills .nav-link {
+  color: var(--primary-color);
+}
+
+.nav-pills .nav-link.active {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border-radius: 0;
+  border-bottom: 3px solid var(--primary-color);
+}

@@ -1,10 +1,37 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  combineReducers,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 import productsReducer from "./reducers/products/ProductsSlice";
-import userInfoREducer from "./reducers/users/userInfoSlice";
+import userInfoReducer from "./reducers/users/userInfoSlice";
+import myProductsReducer from "./reducers/products/myProductsSelic";
+
+// export const store = configureStore({
+//   reducer: {
+//     products: productsReducer,
+//     userInfo: userInfoReducer,
+//     myProducts: myProductsReducer,
+//   },
+// });
+
+// update from above code
+// https://stackoverflow.com/questions/59061161/how-to-reset-state-of-redux-store-when-using-configurestore-from-reduxjs-toolki
+// How to reset state of Redux Store when Logout
+const combinedReducer = combineReducers({
+  products: productsReducer,
+  userInfo: userInfoReducer,
+  myProducts: myProductsReducer,
+});
+
+const rootReducer = (state, action) => {
+  if (action.type === "userInfo/logout") {
+    state = undefined;
+  }
+  return combinedReducer(state, action);
+};
 
 export const store = configureStore({
-  reducer: {
-    products: productsReducer,
-    userInfo: userInfoREducer,
-  },
+  reducer: rootReducer,
+  middleware: [...getDefaultMiddleware()],
 });
