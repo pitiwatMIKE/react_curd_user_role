@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Pagination } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { range } from "../utils/range";
 
 const Paginate = ({ page, maxPage, search, count }) => {
@@ -11,13 +11,23 @@ const Paginate = ({ page, maxPage, search, count }) => {
   let maxIndex = currentPage + count > maxPage ? maxPage : currentPage + count;
   const itemPage = range(minIndex, maxIndex);
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   const pageHandler = (page) => {
     setCurrentPage(page);
+
+    // auto pathname from component while use call pagination
+    const { pathname } = location;
+    let navigatePath = pathname.includes("/page")
+      ? `${pathname.split("/page")[0]}/page/${page}`
+      : pathname === "/"
+      ? `${pathname}page/${page}`
+      : `${pathname}/page/${page}`;
+
     search
       ? navigate(`/search/${search}/page/${page}`)
-      : navigate(`/page/${page}`);
+      : navigate(navigatePath);
   };
 
   return (

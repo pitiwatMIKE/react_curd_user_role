@@ -5,7 +5,7 @@ import { logout } from "../users/userInfoSlice";
 const initialState = {
   loading: false,
   error: false,
-  errrorMessage: "",
+  errorMessage: "",
   value: [],
 };
 
@@ -17,7 +17,7 @@ const myProdutsSlice = createSlice({
       return { ...initialState, loading: true };
     },
     error: (state, action) => {
-      return { ...initialState, error: true, errrorMessage: action.payload };
+      return { ...initialState, error: true, errorMessage: action.payload };
     },
     success: (state, actoin) => {
       return { ...initialState, value: actoin.payload };
@@ -28,9 +28,10 @@ const myProdutsSlice = createSlice({
 const { loading, error, success } = myProdutsSlice.actions;
 
 export const getMyProducts =
-  () =>
+  ({ page }) =>
   async (dispatch) => {
-    const { token } = await JSON.parse(localStorage.getItem("userInfo"));
+    const currentPage = page ? `page=${page}` : "";
+    const { token } = JSON.parse(localStorage.getItem("userInfo"));
     const config = {
       headers: {
         Authorization: "Bearer " + token,
@@ -39,7 +40,10 @@ export const getMyProducts =
 
     dispatch(loading());
     try {
-      const response = await axios.get("/api/products/myproducts", config);
+      const response = await axios.get(
+        `/api/products/myproducts?${currentPage}`,
+        config
+      );
       dispatch(success(response.data));
     } catch (e) {
       if (e.response.status === 401) {

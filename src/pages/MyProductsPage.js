@@ -7,6 +7,8 @@ import {
 } from "../reducers/products/myProductsSelic";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
+import Paginate from "../components/Paginate";
+import { useParams } from "react-router-dom";
 
 function MyProductsPage() {
   const dispatch = useDispatch();
@@ -14,12 +16,13 @@ function MyProductsPage() {
     loading,
     error,
     errorMessage,
-    value: myProducts,
+    value: { myProducts, maxPage },
   } = useSelector(myProductsSelector);
 
+  let { page } = useParams();
   useEffect(() => {
-    dispatch(getMyProducts());
-  }, [dispatch]);
+    dispatch(getMyProducts({ page }));
+  }, [dispatch, page]);
 
   return (
     <>
@@ -52,6 +55,7 @@ function MyProductsPage() {
               ))}
             </tbody>
           </Table>
+          <Paginate count={2} page={page} maxPage={maxPage} />
         </>
       ) : null}
     </>
