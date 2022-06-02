@@ -14,30 +14,41 @@ const myProdutsSlice = createSlice({
   initialState,
   reducers: {
     loading: (state) => {
-      return { ...initialState, loading: true };
+      return { ...state, loading: true, error: false };
     },
     error: (state, action) => {
-      return { ...initialState, error: true, errorMessage: action.payload };
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        errorMessage: action.payload,
+      };
     },
     success: (state, actoin) => {
-      return { ...initialState, value: actoin.payload };
+      return { ...state, loading: false, error: false, value: actoin.payload };
     },
   },
 });
 
 const { loading, error, success } = myProdutsSlice.actions;
 
+const authHeaderConfig = (dispatch) => {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const config = {
+    headers: {
+      Authorization: "Bearer " + userInfo?.token,
+    },
+  };
+  const logoutWithStatus401 = (errorStatus = false) =>
+    errorStatus === 401 ? dispatch(logout()) : false; 
+  return { config, logoutWithStatus401 };
+};
+
 export const getMyProducts =
   ({ page }) =>
   async (dispatch) => {
+    const { config, logoutWithStatus401 } = authHeaderConfig(dispatch);
     const currentPage = page ? `page=${page}` : "";
-    const { token } = JSON.parse(localStorage.getItem("userInfo"));
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
     dispatch(loading());
     try {
       const response = await axios.get(
@@ -46,13 +57,29 @@ export const getMyProducts =
       );
       dispatch(success(response.data));
     } catch (e) {
-      if (e.response.status === 401) {
-        dispatch(logout());
-      }
+      logoutWithStatus401(e.response.status);
       dispatch(error(e.response.data.message));
     }
   };
 
-export const myProductsSelector = (state) => state.myProducts;
+export const deleteMyProduct = (id) => async (dispatch, getState) => {
+  const { config, logoutWithStatus401 } = authHeaderConfig(dispatch);
+  dispatch(loading());
+  try {
+    const response = await axios.delete(
+      `/api/products/${id}/deletemyproduct`,
+      config
+    );
+    let { myProducts, maxPage } = getState().myProducts.value;
+    let newMyProducts = myProducts.filter((item) => item.id !== id);
+    dispatch(
+      success({ myProducts: newMyProducts, maxPage, message: response.data })
+    );
+  } catch (e) {
+    logoutWithStatus401(e.response.status);
+    dispatch(error(e.response.data.message));
+  }
+};
 
+export const myProductsSelector = (state) => state.myProducts;
 export default myProdutsSlice.reducer;

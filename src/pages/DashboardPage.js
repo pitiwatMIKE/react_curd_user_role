@@ -12,11 +12,11 @@ function DashboardPage() {
     if (!userInfo) {
       navigate("/login");
     }
-  });
+  }, [navigate, userInfo]);
 
   return (
     <>
-      <Nav variant="pills" defaultActiveKey="">
+      <Nav variant="pills" defaultActiveKey="myproducts">
         <Nav.Item>
           <NavLink className="nav-link" to="myproducts">
             MyPorducts

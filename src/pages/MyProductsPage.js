@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Image, Table } from "react-bootstrap";
+import { Button, Image, Table } from "react-bootstrap";
 import {
+  deleteMyProduct,
   getMyProducts,
   myProductsSelector,
 } from "../reducers/products/myProductsSelic";
@@ -11,6 +12,7 @@ import Paginate from "../components/Paginate";
 import { useParams } from "react-router-dom";
 
 function MyProductsPage() {
+  let { page } = useParams();
   const dispatch = useDispatch();
   const {
     loading,
@@ -19,7 +21,12 @@ function MyProductsPage() {
     value: { myProducts, maxPage },
   } = useSelector(myProductsSelector);
 
-  let { page } = useParams();
+  const handlerDelete = (id) => {
+    if (window.confirm(`yout want to remove product id: ${id}`)) {
+      dispatch(deleteMyProduct(id));
+    }
+  };
+
   useEffect(() => {
     dispatch(getMyProducts({ page }));
   }, [dispatch, page]);
@@ -51,6 +58,14 @@ function MyProductsPage() {
                   <td>{item.name}</td>
                   <td>{item.price}</td>
                   <td>{item.qty}</td>
+                  <td>
+                    <Button>Edit</Button>
+                  </td>
+                  <td>
+                    <Button onClick={() => handlerDelete(item.id)}>
+                      Delete
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
