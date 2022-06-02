@@ -58,6 +58,7 @@ export default function LoginPage() {
           <Form.Control
             type="email"
             placeholder="Enter email"
+            autoComplete="on"
             name="email"
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -69,6 +70,7 @@ export default function LoginPage() {
           <Form.Control
             type="password"
             placeholder="Password"
+            autoComplete="on"
             name="password"
             onChange={(e) => setPassword(e.target.value)}
             required

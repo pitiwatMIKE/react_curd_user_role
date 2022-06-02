@@ -8,7 +8,7 @@ export default function AdminPage() {
   const { value: userInfo } = useSelector(userInfoSelector);
   useEffect(() => {
     if (!userInfo?.role === "admin") {
-      navigate("/login");
+      navigate("/");
     }
   }, [navigate, userInfo?.role]);
   return (

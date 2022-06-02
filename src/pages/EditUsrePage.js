@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Error from "../components/Error";
-import { register, userInfoSelector } from "../reducers/users/userInfoSlice";
+import { updateUser, userSelector } from "../reducers/users/userSllice";
 
 const initState = {
   firstname: "",
@@ -13,17 +13,20 @@ const initState = {
   confirmPassword: "",
 };
 
-export default function RegisterPage() {
-  const [validated, setValidated] = useState(false);
-  const [notMatch, setNotMatch] = useState(false);
-  const [user, setUser] = useState(initState);
-  const dispatch = useDispatch();
+export default function EditUsrePage() {
   const {
     loading,
     error,
     errorMessage,
-    value: userInfo,
-  } = useSelector(userInfoSelector);
+    value: users,
+  } = useSelector(userSelector);
+  const [validated, setValidated] = useState(false);
+  const [notMatch, setNotMatch] = useState(false);
+  const [user, setUser] = useState(initState);
+  const [checkRole, setCheckRole] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   const handlerChange = (e) => {
     let { name, value } = e.target;
@@ -51,27 +54,30 @@ export default function RegisterPage() {
     if (checkForm(event)) {
       if (user.password === user.confirmPassword) {
         setNotMatch(false);
-        dispatch(register(user));
+        user.role = checkRole ? "admin" : "user";
+        dispatch(updateUser(id, user, navigate));
       } else {
         setNotMatch(true);
       }
     }
   };
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    if (userInfo) {
-      navigate("/dashboard");
+    if (users.length !== 0) {
+      const { firstname, lastname, email, role } = users.filter(
+        (user) => user.id === Number(id)
+      )[0];
+      setUser({ ...user, firstname, lastname, email });
+      setCheckRole(role === "admin" ? true : false);
     }
-  }, [navigate, userInfo]);
+  }, [users, id]);
 
   return (
     <div
       style={{ maxWidth: 700 }}
       className=" mt-5 mx-auto py-4 px-5 border rounded shadow-sm"
     >
-      <h2 className="mb-4">Register</h2>
+      <h2 className="mb-4">Update User</h2>
       {error && <Error msg={errorMessage} />}
       <Form noValidate validated={validated} onSubmit={handlerSubmit}>
         <Row>
@@ -82,8 +88,8 @@ export default function RegisterPage() {
                 type="text"
                 placeholder="Enter First Name"
                 name="firstname"
+                value={user.firstname || ""}
                 onChange={handlerChange}
-                required
               />
             </Form.Group>
           </Col>
@@ -95,8 +101,8 @@ export default function RegisterPage() {
                 type="text"
                 placeholder="Enter Last Name"
                 name="lastname"
+                value={user.lastname || ""}
                 onChange={handlerChange}
-                required
               />
             </Form.Group>
           </Col>
@@ -108,8 +114,8 @@ export default function RegisterPage() {
             type="email"
             placeholder="Enter email"
             name="email"
+            value={user.email || ""}
             onChange={handlerChange}
-            required
           />
         </Form.Group>
 
@@ -118,10 +124,10 @@ export default function RegisterPage() {
           <Form.Control
             type="password"
             placeholder="Password"
-            name="password"
             autoComplete="off"
+            name="password"
+            value={user.password || ""}
             onChange={handlerChange}
-            required
           />
         </Form.Group>
 
@@ -130,15 +136,24 @@ export default function RegisterPage() {
           <Form.Control
             type="password"
             placeholder="Confirm Password"
-            name="confirmPassword"
             autoComplete="off"
+            name="confirmPassword"
+            value={user.confirmPassword || ""}
             onChange={handlerChange}
-            required
           />
           {notMatch && (
             <small style={{ color: "#f00" }}>not match password</small>
           )}
         </Form.Group>
+
+        <Form.Check
+          type="switch"
+          id="custom-switch"
+          label="Amin"
+          name="role"
+          checked={checkRole}
+          onChange={(e) => setCheckRole(e.target.checked)}
+        />
 
         <Button
           className="mt-3"
@@ -146,7 +161,7 @@ export default function RegisterPage() {
           type="submit"
           disabled={loading}
         >
-          Register
+          Update
         </Button>
       </Form>
     </div>

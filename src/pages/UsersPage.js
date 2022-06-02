@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Table } from "react-bootstrap";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
-import { getUsers, userSelector } from "../reducers/users/userSllice";
+import {
+  getUsers,
+  removeUser,
+  userSelector,
+} from "../reducers/users/userSllice";
+import { useNavigate } from "react-router-dom";
 
 export default function UsersPage() {
   const {
@@ -13,6 +18,13 @@ export default function UsersPage() {
     value: users,
   } = useSelector(userSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const deleteHandler = (id) => {
+    if (window.confirm(`yout want to remove user id: ${id}`)) {
+      dispatch(removeUser(id));
+    }
+  };
+
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
@@ -41,10 +53,21 @@ export default function UsersPage() {
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
-                  <Button>Edit</Button>
+                  <Button
+                    onClick={() =>
+                      navigate(`/dashboard/admin/users/edit/${user.id}`)
+                    }
+                  >
+                    Edit
+                  </Button>
                 </td>
                 <td>
-                  <Button variant="secondary">Delete</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => deleteHandler(user.id)}
+                  >
+                    Delete
+                  </Button>
                 </td>
               </tr>
             ))}

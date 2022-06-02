@@ -6,6 +6,7 @@ import AdminPage from "./pages/AdminPage";
 import CreateMyProductPage from "./pages/CreateMyProductPage";
 import DashboardPage from "./pages/DashboardPage";
 import EditMyProductPage from "./pages/EditMyProductPage";
+import EditUsrePage from "./pages/EditUsrePage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import MyProductsPage from "./pages/MyProductsPage";
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="myproducts/edit/:id" element={<EditMyProductPage />} />
             <Route path="admin" element={<AdminPage />}>
               <Route path="users" element={<UsersPage />} />
+              <Route path="users/edit/:id" element={<EditUsrePage />} />
             </Route>
           </Route>
           <Route path="/register" element={<RegisterPage />} />
