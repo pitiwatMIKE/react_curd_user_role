@@ -19,7 +19,7 @@ export default function Header() {
           variant="secondary"
           onClick={() => {
             dispatch(logout());
-            navigate("/")
+            navigate("/login");
           }}
         >
           Logout

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { logout } from "../users/userInfoSlice";
+import { authHeaderConfig } from "../../utils/authHeaderConfig";
 
 const initialState = {
   loading: false,
@@ -32,22 +32,10 @@ const myProdutsSlice = createSlice({
 
 const { loading, error, success } = myProdutsSlice.actions;
 
-const authHeaderConfig = (dispatch) => {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const config = {
-    headers: {
-      Authorization: "Bearer " + userInfo?.token,
-    },
-  };
-  const logoutWithStatus401 = (errorStatus = false) =>
-    errorStatus === 401 ? dispatch(logout()) : false;
-  return { config, logoutWithStatus401 };
-};
-
 export const getMyProducts =
   ({ page }) =>
   async (dispatch) => {
-    const { config, logoutWithStatus401 } = authHeaderConfig(dispatch);
+    const { config, logoutWithStatus } = authHeaderConfig(dispatch);
     const currentPage = page ? `page=${page}` : "";
     dispatch(loading());
     try {
@@ -57,13 +45,13 @@ export const getMyProducts =
       );
       dispatch(success(response.data));
     } catch (e) {
-      logoutWithStatus401(e.response.status);
+      logoutWithStatus(e.response.status, 401);
       dispatch(error(e.response.data.message));
     }
   };
 
 export const deleteMyProduct = (id) => async (dispatch, getState) => {
-  const { config, logoutWithStatus401 } = authHeaderConfig(dispatch);
+  const { config, logoutWithStatus } = authHeaderConfig(dispatch);
   dispatch(loading());
   try {
     const response = await axios.delete(
@@ -76,14 +64,14 @@ export const deleteMyProduct = (id) => async (dispatch, getState) => {
       success({ myProducts: newMyProducts, maxPage, message: response.data })
     );
   } catch (e) {
-    logoutWithStatus401(e.response.status);
+    logoutWithStatus(e.response.status, 401);
     dispatch(error(e.response.data.message));
   }
 };
 
 export const createMyProduct =
   (product, navigate) => async (dispatch, getState) => {
-    const { config, logoutWithStatus401 } = authHeaderConfig(dispatch);
+    const { config, logoutWithStatus } = authHeaderConfig(dispatch);
     config.headers["Content-Type"] = "multipart/form-data";
 
     dispatch(loading());
@@ -97,14 +85,14 @@ export const createMyProduct =
       );
       navigate("/dashboard/myproducts");
     } catch (e) {
-      logoutWithStatus401(e.response.status);
+      logoutWithStatus(e.response.status, 401);
       dispatch(error(e.response.data.message));
     }
   };
 
 export const updateMyProduct =
   (id, product, navigate) => async (dispatch, getState) => {
-    const { config, logoutWithStatus401 } = authHeaderConfig(dispatch);
+    const { config, logoutWithStatus } = authHeaderConfig(dispatch);
     config.headers["Content-Type"] = "multipart/form-data";
 
     dispatch(loading());
@@ -118,7 +106,7 @@ export const updateMyProduct =
       );
       navigate("/dashboard/myproducts");
     } catch (e) {
-      logoutWithStatus401(e.response.status);
+      logoutWithStatus(e.response.status, 401);
       dispatch(error(e.response.data.message));
     }
   };

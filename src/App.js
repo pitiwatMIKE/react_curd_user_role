@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import AboutPage from "./pages/AboutPage";
+import AdminPage from "./pages/AdminPage";
 import CreateMyProductPage from "./pages/CreateMyProductPage";
 import DashboardPage from "./pages/DashboardPage";
 import EditMyProductPage from "./pages/EditMyProductPage";
@@ -10,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import MyProductsPage from "./pages/MyProductsPage";
 import ProductPage from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
+import UsersPage from "./pages/UsersPage";
 
 export default function App() {
   return (
@@ -21,6 +23,9 @@ export default function App() {
             <Route path="myproducts/page/:page" element={<MyProductsPage />} />
             <Route path="myproducts/create" element={<CreateMyProductPage />} />
             <Route path="myproducts/edit/:id" element={<EditMyProductPage />} />
+            <Route path="admin" element={<AdminPage />}>
+              <Route path="users" element={<UsersPage />} />
+            </Route>
           </Route>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />

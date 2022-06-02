@@ -6,7 +6,7 @@ import {
 import productsReducer from "./reducers/products/ProductsSlice";
 import userInfoReducer from "./reducers/users/userInfoSlice";
 import myProductsReducer from "./reducers/products/myProdutsSlice";
-
+import userReducer from "./reducers/users/userSllice";
 // export const store = configureStore({
 //   reducer: {
 //     products: productsReducer,
@@ -22,6 +22,7 @@ const combinedReducer = combineReducers({
   products: productsReducer,
   userInfo: userInfoReducer,
   myProducts: myProductsReducer,
+  users: userReducer,
 });
 
 const rootReducer = (state, action) => {

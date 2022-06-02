@@ -9,6 +9,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     loading,
@@ -38,11 +39,9 @@ export default function LoginPage() {
     }
   };
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (userInfo) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [navigate, userInfo]);
 
