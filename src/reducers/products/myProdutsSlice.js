@@ -102,5 +102,26 @@ export const createMyProduct =
     }
   };
 
+export const updateMyProduct =
+  (id, product, navigate) => async (dispatch, getState) => {
+    const { config, logoutWithStatus401 } = authHeaderConfig(dispatch);
+    config.headers["Content-Type"] = "multipart/form-data";
+
+    dispatch(loading());
+    try {
+      await axios.put(`/api/products/${id}/updatemyproduct`, product, config);
+      dispatch(
+        success({
+          value: getState().myProducts.value,
+          message: "Update Product Success",
+        })
+      );
+      navigate("/dashboard/myproducts");
+    } catch (e) {
+      logoutWithStatus401(e.response.status);
+      dispatch(error(e.response.data.message));
+    }
+  };
+
 export const myProductsSelector = (state) => state.myProducts;
 export default myProdutsSlice.reducer;

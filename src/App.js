@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import AboutPage from "./pages/AboutPage";
 import CreateMyProductPage from "./pages/CreateMyProductPage";
 import DashboardPage from "./pages/DashboardPage";
+import EditMyProductPage from "./pages/EditMyProductPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import MyProductsPage from "./pages/MyProductsPage";
@@ -17,8 +18,9 @@ export default function App() {
         <Routes>
           <Route path="/dashboard" element={<DashboardPage />}>
             <Route path="myproducts" element={<MyProductsPage />} />
-            <Route path="myproducts/create" element={<CreateMyProductPage />} />
             <Route path="myproducts/page/:page" element={<MyProductsPage />} />
+            <Route path="myproducts/create" element={<CreateMyProductPage />} />
+            <Route path="myproducts/edit/:id" element={<EditMyProductPage />} />
           </Route>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />

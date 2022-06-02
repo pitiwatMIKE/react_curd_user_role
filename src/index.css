@@ -66,3 +66,15 @@ body {
   border-radius: 0;
   border-bottom: 3px solid var(--primary-color);
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.loading .spinner-border {
+  min-width: 150px;
+  min-height: 150px;
+}

@@ -72,10 +72,19 @@ function MyProductsPage() {
                     <Link to={`/product/${item.id}`}>Detail</Link>
                   </td>
                   <td>
-                    <Button>Edit</Button>
+                    <Button
+                      onClick={() =>
+                        navigate(`/dashboard/myproducts/edit/${item.id}`)
+                      }
+                    >
+                      Edit
+                    </Button>
                   </td>
                   <td>
-                    <Button variant="secondary" onClick={() => handlerDelete(item.id)}>
+                    <Button
+                      variant="secondary"
+                      onClick={() => handlerDelete(item.id)}
+                    >
                       Delete
                     </Button>
                   </td>
