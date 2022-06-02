@@ -16,9 +16,9 @@ function DashboardPage() {
 
   return (
     <>
-      <Nav variant="pills" defaultActiveKey="myproducts">
+      <Nav variant="pills" defaultActiveKey="/dashboard/myproducts">
         <Nav.Item>
-          <NavLink className="nav-link" to="myproducts">
+          <NavLink className="nav-link" to="/dashboard/myproducts">
             MyPorducts
           </NavLink>
         </Nav.Item>

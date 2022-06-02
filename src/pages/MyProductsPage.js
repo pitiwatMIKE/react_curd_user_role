@@ -1,19 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Image, Table } from "react-bootstrap";
+import { Button, Col, Image, Row, Table } from "react-bootstrap";
 import {
   deleteMyProduct,
   getMyProducts,
   myProductsSelector,
-} from "../reducers/products/myProductsSelic";
+} from "../reducers/products/myProdutsSlice";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import Paginate from "../components/Paginate";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 function MyProductsPage() {
   let { page } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     loading,
     error,
@@ -39,7 +40,16 @@ function MyProductsPage() {
         <Error msg={errorMessage} />
       ) : myProducts ? (
         <>
-          <h2 className="mt-5 mb-3">MyProductsPage</h2>
+          <Row className="mt-5 mb-3 justify-content-between">
+            <Col md={12} lg="auto">
+              <h2>MyProductsPage</h2>
+            </Col>
+            <Col lg="auto">
+              <Button onClick={() => navigate("/dashboard/myproducts/create")}>
+                Create Product
+              </Button>
+            </Col>
+          </Row>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -59,10 +69,13 @@ function MyProductsPage() {
                   <td>{item.price}</td>
                   <td>{item.qty}</td>
                   <td>
+                    <Link to={`/product/${item.id}`}>Detail</Link>
+                  </td>
+                  <td>
                     <Button>Edit</Button>
                   </td>
                   <td>
-                    <Button onClick={() => handlerDelete(item.id)}>
+                    <Button variant="secondary" onClick={() => handlerDelete(item.id)}>
                       Delete
                     </Button>
                   </td>

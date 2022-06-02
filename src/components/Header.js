@@ -61,7 +61,7 @@ export default function Header() {
                 About
               </NavLink>
 
-              <NavLink className="nav-link" to="/dashboard">
+              <NavLink className="nav-link" to="/dashboard/myproducts">
                 DashBoard
               </NavLink>
             </Nav>

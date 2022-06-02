@@ -40,7 +40,7 @@ const authHeaderConfig = (dispatch) => {
     },
   };
   const logoutWithStatus401 = (errorStatus = false) =>
-    errorStatus === 401 ? dispatch(logout()) : false; 
+    errorStatus === 401 ? dispatch(logout()) : false;
   return { config, logoutWithStatus401 };
 };
 
@@ -80,6 +80,27 @@ export const deleteMyProduct = (id) => async (dispatch, getState) => {
     dispatch(error(e.response.data.message));
   }
 };
+
+export const createMyProduct =
+  (product, navigate) => async (dispatch, getState) => {
+    const { config, logoutWithStatus401 } = authHeaderConfig(dispatch);
+    config.headers["Content-Type"] = "multipart/form-data";
+
+    dispatch(loading());
+    try {
+      await axios.post("/api/products/create", product, config);
+      dispatch(
+        success({
+          value: getState().myProducts.value,
+          message: "Creaet Product Success",
+        })
+      );
+      navigate("/dashboard/myproducts");
+    } catch (e) {
+      logoutWithStatus401(e.response.status);
+      dispatch(error(e.response.data.message));
+    }
+  };
 
 export const myProductsSelector = (state) => state.myProducts;
 export default myProdutsSlice.reducer;

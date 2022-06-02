@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import DateFormat from "../components/DateFormat";
 import GoBack from "../components/GoBack";
 
 function ProductPage() {
@@ -29,7 +30,12 @@ function ProductPage() {
             </Col>
 
             <Col>
-              <p>{product.updatedAt}</p>
+              <p>
+                <strong>
+                  {" "}
+                  UpdateAt : <DateFormat time={product.updatedAt} />
+                </strong>
+              </p>
               <div>
                 <strong>Price: {product.price}</strong>
               </div>
