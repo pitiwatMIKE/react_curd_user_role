@@ -8,7 +8,7 @@ import {
   removeUser,
   userSelector,
 } from "../reducers/users/userSllice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function UsersPage() {
   const {
@@ -52,6 +52,11 @@ export default function UsersPage() {
                 <td>{user.firstname + " " + user.lastname}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
+                <td>
+                  <Link to={`/dashboard/admin/users/products/${user.id}`}>
+                    UserProducts
+                  </Link>
+                </td>
                 <td>
                   <Button
                     onClick={() =>

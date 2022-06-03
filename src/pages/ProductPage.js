@@ -37,6 +37,9 @@ function ProductPage() {
                 </strong>
               </p>
               <div>
+                <strong>Name: {product.name}</strong>
+              </div>
+              <div>
                 <strong>Price: {product.price}</strong>
               </div>
               <p>

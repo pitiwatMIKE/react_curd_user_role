@@ -6,12 +6,14 @@ import AdminPage from "./pages/AdminPage";
 import CreateMyProductPage from "./pages/CreateMyProductPage";
 import DashboardPage from "./pages/DashboardPage";
 import EditMyProductPage from "./pages/EditMyProductPage";
+import EditUserProductsPage from "./pages/EditUserProductsPage";
 import EditUsrePage from "./pages/EditUsrePage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import MyProductsPage from "./pages/MyProductsPage";
 import ProductPage from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
+import UserProductsPage from "./pages/UserProductsPage";
 import UsersPage from "./pages/UsersPage";
 
 export default function App() {
@@ -27,6 +29,18 @@ export default function App() {
             <Route path="admin" element={<AdminPage />}>
               <Route path="users" element={<UsersPage />} />
               <Route path="users/edit/:id" element={<EditUsrePage />} />
+              <Route
+                path="users/products/:userId"
+                element={<UserProductsPage />}
+              />
+              <Route
+                path="users/products/edit/:id"
+                element={<EditUserProductsPage />}
+              />
+              <Route
+                path="users/products/:userId/page/:page"
+                element={<UserProductsPage />}
+              />
             </Route>
           </Route>
           <Route path="/register" element={<RegisterPage />} />

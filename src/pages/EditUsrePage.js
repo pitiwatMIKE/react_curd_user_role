@@ -67,7 +67,7 @@ export default function EditUsrePage() {
       const { firstname, lastname, email, role } = users.filter(
         (user) => user.id === Number(id)
       )[0];
-      setUser({ ...user, firstname, lastname, email });
+      setUser({ ...initState, firstname, lastname, email });
       setCheckRole(role === "admin" ? true : false);
     }
   }, [users, id]);

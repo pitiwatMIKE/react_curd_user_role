@@ -57,12 +57,12 @@ export default function Header() {
                 Home
               </NavLink>
 
-              <NavLink className="nav-link" to="/about">
-                About
-              </NavLink>
-
               <NavLink className="nav-link" to="/dashboard/myproducts">
                 DashBoard
+              </NavLink>
+
+              <NavLink className="nav-link" to="/about">
+                About
               </NavLink>
             </Nav>
             <div>{userInfo ? <Logout /> : <Login />}</div>
