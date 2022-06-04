@@ -54,6 +54,8 @@ export const getUserProducts =
 export const updateUserProducts =
   (id, data, navigate) => async (dispatch, getState) => {
     const { config, logoutWithStatus } = authHeaderConfig(dispatch);
+    config.headers["Content-Type"] = "multipart/form-data";
+    
     dispatch(loading());
     try {
       await axios.put(`/api/products/${id}/update`, data, config);
